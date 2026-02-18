@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Session Enrollment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fb;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 230px;
+            background-color: #fbfbfb;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #1076f4;
+            text-decoration: none;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover {
+            background-color: #40e2df;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .role-badge {
+            background-color: #2563eb;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            margin-bottom: 15px;
+        }
+
+        .controls input {
+            padding: 8px;
+            width: 250px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0f172a;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #e1c918;
+        }
+
+        .status-active {
+            color: green;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .access-denied {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 22px;
+            color: red;
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<script>
+    // Simulated logged-in role
+    let userRole = "Admin"; // Change to "Student" to test access restriction
+
+    if (userRole !== "Admin" && userRole !== "Instructor") {
+        document.body.innerHTML = "<div class='access-denied'>Access Denied: Unauthorized User</div>";
+    }
+</script>
+
+<div class="layout">
+
+    <div class="sidebar">
+        <h2>OCR's Systems</h2>
+        <a href="#">Dashboards</a>
+        <a href="#">Courses</a>
+        <a href="#"><strong>Session Enrollments</strong></a>
+        <a href="#">Students</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <div class="main">
+
+        <header>
+            <h1>Session Enrollment</h1>
+            <div class="role-badge">Logged in as: Admin</div>
+        </header>
+
+        <div class="card">
+            <h3>University:</h3>
+            <p><strong>User Session ID:</strong> S2026-SPR-01</p>
+            <p><strong>Instructor:</strong> Dr. Smith</p>
+            <p><strong>Term:</strong> Spring 2026</p>
+        </div>
+
+        <div class="card">
+            <div class="controls">
+                <input type="text" id="searchInput" placeholder="Search student by name..." onkeyup="searchTable()">
+            </div>
+
+            <table id="enrollmentTable">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Enrollment Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10021</td>
+                        <td>John Doe</td>
+                        <td>john@email.com</td>
+                        <td>01/10/2026</td>
+                        <td class="status-active">Active</td>
+                    </tr>
+                    <tr>
+                        <td>10045</td>
+                        <td>Jane Lee</td>
+                        <td>jane@email.com</td>
+                        <td>01/11/2026</td>
+                        <td class="status-active">Active</td>
+                    </tr>
+                    <tr>
+                        <td>10078</td>
+                        <td>Michael Brown</td>
+                        <td>michael@email.com</td>
+                        <td>01/12/2026</td>
+                        <td class="status-active">Active</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">
+                Total Enrolled: <span id="studentCount"></span> Students
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Auto-count students
+    function updateStudentCount() {
+        let table = document.getElementById("enrollmentTable");
+        let rowCount = table.getElementsByTagName("tbody")[0].rows.length;
+        document.getElementById("studentCount").innerText = rowCount;
+    }
+
+    // Search functionality
+    function searchTable() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toUpperCase();
+        let table = document.getElementById("enrollmentTable");
+        let tr = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < tr.length; i++) {
+            let td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                let txtValue = td.textContent || td.innerText;
+                tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+    }
+
+    updateStudentCount();
+</script>
+
+</body>
+</html>
