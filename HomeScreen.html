@@ -115,6 +115,72 @@
             padding: 1.5rem;
             margin-top: auto;
             border-top: 4px solid var(--accent-yellow);
+        } 
+
+        /* --- COURSE CARD STYLES --- */
+        .course-grid {
+            display: grid;
+            /* This creates a responsive layout that fits as many cards as possible */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .course-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden; /* Keeps content inside rounded corners */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px); /* Slight lift effect on hover */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            background-color: var(--primary-black);
+            color: white;
+            padding: 15px;
+            border-bottom: 3px solid var(--accent-yellow); /* The A-Team Yellow Line */
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .course-info {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .course-info strong {
+            color: var(--primary-black);
+        }
+
+        /* Full-width button for the card */
+        .card-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--accent-yellow);
+            color: var(--primary-black);
+            padding: 10px 0;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .card-btn:hover {
+            background-color: #e6c200;
         }
     </style>
 </head>
@@ -135,33 +201,159 @@
     </header>
 
     <main>
-        
+
         <h1>Welcome Back A-Team Student!</h1>           
         <h2>February 19th, 2026 - 5:03pm</h2> 
 
-
-        <div class="developer-zone-indicator">
-            <h2>Student Information:</h2>
-            <p>Username: A-Team User #150</p>
-            <p>Email: a150@ateam.com</p>
-            <p>A-ID: A-930183</p>
-            <p>Class of: 2026 (Senior)</p>
-            <p>Total Credits: 115 Credit Hours</p>
-            <p>Payments Due: 0</p>
-            <p>Academic Status: Good-Standing</p>
+        <div class="developer-zone-indicator"> 
+            <h1>🎓 Student Information:</h1>
+            <p><strong>Username:</strong> A-Team User #150</p>
+            <p><strong>Email:</strong> a150@ateam.com</p>
+            <p><strong>A-ID:</strong> A-930183</p>
+            <p><strong>Class of:</strong> 2026 (Senior)</p>
+            <p><strong>Total Credits:</strong> 115 Credit Hours</p>
+            <p><strong>Payments Due:</strong> 0</p>
+            <p><strong>Academic Status:</strong> Good-Standing</p>
 
         </div> 
+        </div>
+    
 
-        <div class="developer-zone-indicator">
-            <h2>Current Class Information: </h2>
+        <div class="developer-zone-indicator"> 
+             <section class="courses-section">
+        <h1>📖 Current Class Information:</h1>
+        
+        <div class="course-grid">
+            
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Projects in Information Systems</h3>
+                    <h3>A-INFO 465</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Instructor:</strong> K. Rudravarjula</p>
+                    <br>
+                    <a href="#" class="card-btn">See Details</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Database Systems</h3> 
+                    <h3>A-INFO 364</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Instructor:</strong> T. Bakare</p>
+                    <br>
+                    <a href="#" class="card-btn">See Details</a>
+                </div>
+            </div> 
+
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Financial Management</h3> 
+                    <h3>A-FIRE 311</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Instructor:</strong> J. Doe</p>
+                    <br>
+                    <a href="#" class="card-btn">See Details</a>
+                </div>
+            </div>
+
+        </div> 
+        </section>
         </div>
 
         <div class="developer-zone-indicator">
-            <h2>Current Class Schedule: </h2>
+            <h1>🏫 Current Class Schedule: </h1>
+            <br>
+
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Projects in Information Systems</h3>
+                    <h3>A-INFO 465</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Days:</strong> Thursday</p>
+                    <p><strong>Times:</strong> 7:00pm - 9:45pm</p> 
+                    <p><strong>📍 Location:</strong> Room 230a, A-Team University Hall, Building A</p>
+                    <br>
+                </div> 
+            </div>  
+
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Database Systems</h3>
+                    <h3>A-INFO 364</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Days:</strong> Mondays - Wednesdays</p>
+                    <p><strong>Times:</strong> 3:00pm - 4:15pm</p> 
+                    <p><strong>📍 Location:</strong> Room 150a, A-Team University Hall, Building A</p>
+                    <br>
+                </div> 
+            </div>  
+
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Financial Management</h3>
+                    <h3>A-FIRE 311</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Days:</strong> Tuesdays - Thursdays</p>
+                    <p><strong>Times:</strong> 12:30pm - 1:45pm</p> 
+                    <p><strong>📍 Location:</strong> Room 210a, A-Team Financial Commons, Building B</p>
+                    <br>
+                </div> 
+            </div> 
+
         </div> 
 
         <div class="developer-zone-indicator">
-            <h2>Academic Advisors Information: </h2>
+            <h1>📧 University Advisor Information: </h1> 
+
+            <div class="course-grid">
+            
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Academic/Major Advisor: </h3>
+                    <h3>Dr. Andrew Ospina</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Email: </strong> Ospinaa@ateam.com</p>
+                    <p><strong>Office Number: </strong> 800-123-4567</p>
+                    <br>
+                    <a href="#" class="card-btn">Contact Now</a>
+                </div>
+            </div> 
+            
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Financial Advisor: </h3>
+                    <h3>Dr. Sanjana Illendula</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Email: </strong> Illendulas@ateam.com</p>
+                    <p><strong>Office Number: </strong> 800-123-4568</p>
+                    <br>
+                    <a href="#" class="card-btn">Contact Now</a>
+                </div>
+            </div> 
+            
+            <div class="course-card">
+                <div class="card-header">
+                    <h3>Experience Advisor: </h3>
+                    <h3>Dr. Jean Carlo Gachet</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Email: </strong> Gachetjc@ateam.com</p>
+                    <p><strong>Office Number: </strong> 800-123-4569</p>
+                    <br>
+                    <a href="#" class="card-btn">Contact Now</a>
+                </div>
+            </div> 
+
         </div> 
 
     </main>
