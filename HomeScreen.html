@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- This is what we will use for our main template for our fake webpage - Andrew Ospina -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Team Home Screen</title>
+    <style>
+        /* --- CSS VARIABLES (Theme Colors) --- */
+        :root {
+            --primary-black: #1a1a1a;
+            --accent-yellow: #FFD700; /* Gold/Yellow */
+            --bg-white: #f4f4f4;
+            --text-dark: #333333;
+        }
+
+        /* --- BASIC RESET --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures footer stays at bottom even if page is empty */
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--primary-black);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-yellow);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-yellow); /* Makes "Team" yellow */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-yellow);
+        }
+
+        /* --- BUTTONS (Global Style) --- */
+        .btn {
+            background-color: var(--accent-yellow);
+            color: var(--primary-black);
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #e6c200;
+        }
+
+        /* --- MAIN DEVELOPER AREA --- */
+        /* This is the container where you will do your work */
+        main {
+            flex: 1; /* Pushes footer down */
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto; /* Centers the container */
+            padding: 2rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Optional: Dashed border to show Developer where to work (You can remove this later) */
+        .developer-zone-indicator {
+            border: 2px dashed #ccc;
+            padding: 4rem;
+            text-align: center;
+            color: #888;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-black);
+            color: #888;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            border-top: 4px solid var(--accent-yellow);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">A-<span>Team</span> Systems</div>
+        <nav>
+            <ul>
+                <li><a href="#" style="color: yellow;">[ Home ]</a></li>
+                <li><a href="#">[ Course Search ]</a></li>
+                <li><a href="#">[ Student Registrations ]</a></li>
+                <li><a href="#">[ Instructor Schedules ]</a></li> 
+                <li><a href="#">[ Session Enrollment ]</a></li>
+                <li><a href="#" class="btn">Sign Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <h1>Welcome Back A-Team Student!</h1>           
+        <h2>February 19th, 2026 - 5:03pm</h2> 
+
+
+        <div class="developer-zone-indicator">
+            <h2>Student Information:</h2>
+            <p>Username: A-Team User #150</p>
+            <p>Email: a150@ateam.com</p>
+            <p>A-ID: A-930183</p>
+            <p>Class of: 2026 (Senior)</p>
+            <p>Total Credits: 115 Credit Hours</p>
+            <p>Payments Due: 0</p>
+            <p>Academic Status: Good-Standing</p>
+
+        </div> 
+
+        <div class="developer-zone-indicator">
+            <h2>Current Class Information: </h2>
+        </div>
+
+        <div class="developer-zone-indicator">
+            <h2>Current Class Schedule: </h2>
+        </div> 
+
+        <div class="developer-zone-indicator">
+            <h2>Academic Advisors Information: </h2>
+        </div> 
+
+    </main>
+
+    <footer>
+        <p>&copy; INFO-465 A-Team Group - UI/UX Team Assignment - Andrew, Tolu, Sanjana, & Jean </p>
+    </footer>
+
+</body>
+</html>
