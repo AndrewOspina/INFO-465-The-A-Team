@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Student Registration Screen -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A-Team Instructor Schedule Screen</title>
@@ -22,11 +21,7 @@
         }
 
         /* --- BASIC RESET --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -37,7 +32,7 @@
             min-height: 100vh;
         }
 
-        /* --- HEADER & NAVIGATION --- */
+        /* --- HEADER --- */
         header {
             background-color: var(--primary-black);
             color: white;
@@ -48,37 +43,14 @@
             border-bottom: 4px solid var(--accent-yellow);
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .logo { font-size: 1.8rem; font-weight: bold; color: white; letter-spacing: 1px; text-transform: uppercase; }
+        .logo span { color: var(--accent-yellow); }
 
-        .logo span {
-            color: var(--accent-yellow);
-        }
+        nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: white; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--accent-yellow); }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent-yellow);
-        }
-
-        /* --- BUTTONS (Global Style) --- */
+        /* --- BUTTONS --- */
         .btn {
             background-color: var(--accent-yellow);
             color: var(--primary-black);
@@ -86,11 +58,16 @@
             border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
-            display: inline-block;
             border: none;
             cursor: pointer;
         }
         .btn:hover { background-color: #e6c200; }
+        
+        /* Small button for the table toggle */
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 0.85rem;
+        }
 
         .btn-secondary {
             background-color: white;
@@ -99,14 +76,7 @@
         }
         .btn-secondary:hover { background-color: #f6f6f6; }
 
-        .btn-danger {
-            background-color: #ffe3e3;
-            border: 2px solid #c92a2a;
-            color: #c92a2a;
-        }
-        .btn-danger:hover { background-color: #ffd1d1; }
-
-        /* --- MAIN --- */
+        /* --- MAIN LAYOUT --- */
         main {
             flex: 1;
             width: 100%;
@@ -116,46 +86,23 @@
             background-color: white;
             border: 1px solid #ddd;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
         }
 
-        /* --- PAGE LAYOUT --- */
         .page-title {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            gap: 12px;
             margin-bottom: 1.25rem;
         }
-
-        .page-title h1 {
-            font-size: 1.6rem;
-            margin-bottom: .25rem;
-        }
-
-        .subtext {
-            color: #666;
-            font-size: .95rem;
-        }
-
+        .page-title h1 { font-size: 1.6rem; }
+        .subtext { color: #666; font-size: .95rem; }
+        
         .badge {
-            display: inline-block;
             padding: 6px 10px;
             border-radius: 999px;
             border: 1px solid var(--border);
             background: #fafafa;
             font-size: .85rem;
-            white-space: nowrap;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 18px;
-        }
-
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: 1fr; }
         }
 
         .card {
@@ -163,8 +110,8 @@
             border-radius: 8px;
             padding: 16px;
             background: #fff;
+            margin-bottom: 20px;
         }
-
         .card h2 {
             font-size: 1.1rem;
             margin-bottom: 10px;
@@ -172,116 +119,47 @@
             padding-left: 10px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 10px;
+        /* --- FORM ELEMENTS --- */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+        
+        /* --- TABLE STYLES --- */
+        .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 8px; margin-top: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        
+        thead th { background: #f7f7f7; text-align: left; padding: 10px; border-bottom: 1px solid var(--border); }
+        tbody td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+
+        .pill { padding: 3px 8px; border-radius: 999px; font-size: .8rem; border: 1px solid #ddd; }
+        .pill.good { background: #e9f8ef; color: #126b2b; border-color: #b9f0c8; }
+        .pill.warn { background: #fff8e1; color: #b7791f; border-color: #fce96a; }
+
+        /* --- DROPDOWN / ACCORDION STYLES --- */
+        /* Hidden by default */
+        .roster-row {
+            display: none; 
+            background-color: #fafafa;
         }
-        @media (max-width: 700px) {
-            .form-row { grid-template-columns: 1fr; }
+        
+        /* When active, show it as a table-row */
+        .roster-row.active {
+            display: table-row;
         }
 
-        label {
-            font-size: .9rem;
-            color: #444;
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
+        .roster-container {
+            padding: 15px 25px;
+            border-left: 4px solid #ddd;
         }
 
-        input, select {
+        /* Inner table for students */
+        .roster-table {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            outline: none;
+            font-size: 0.9rem;
+            border: 1px solid #eee;
+            background: white;
         }
-
-        input:focus, select:focus {
-            border-color: var(--accent-yellow);
-            box-shadow: 0 0 0 3px rgba(255,215,0,0.25);
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-            align-items: center;
-        }
-
-        .note {
-            margin-top: 8px;
-            font-size: .85rem;
-            color: #666;
-        }
-
-        .notice {
-            margin-top: 12px;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: #fafafa;
-        }
-        .notice.ok {
-            background: var(--ok-bg);
-            border-color: #b9f0c8;
-            color: var(--ok-text);
-        }
-        .notice.err {
-            background: var(--err-bg);
-            border-color: #ffbcbc;
-            color: var(--err-text);
-        }
-
-        /* --- TABLE --- */
-        .table-wrap {
-            overflow: auto;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-top: 12px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 680px;
-        }
-
-        thead th {
-            background: #f7f7f7;
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
-            font-size: .9rem;
-        }
-
-        tbody td {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            vertical-align: top;
-            font-size: .95rem;
-        }
-
-        .pill {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 999px;
-            font-size: .8rem;
-            border: 1px solid #ddd;
-            background: #fff;
-        }
-        .pill.full {
-            border-color: #ffbcbc;
-            background: #fdecec;
-            color: #9b1c1c;
-        }
-        .pill.open {
-            border-color: #b9f0c8;
-            background: #e9f8ef;
-            color: #126b2b;
-        }
+        .roster-table th { background-color: #eee; color: #555; }
+        .roster-table td { border-bottom: 1px solid #eee; padding: 8px; }
 
         /* --- FOOTER --- */
         footer {
@@ -300,13 +178,12 @@
     <div class="logo">A-<span>Team</span> Systems</div>
     <nav>
         <ul>
-            <!-- Update href paths to your real html filenames -->
             <li><a href="index.html">[ Home ]</a></li>
             <li><a href="course-search.html">[ Course Search ]</a></li>
             <li><a href="student-registrations.html">[ Student Registrations ]</a></li>
-            <li><a href="instructor-schedules.html" style="color: yellow;">[ Instructor Schedules ]</a></li>
+            <li><a href="instructor-schedules.html" style="color: var(--accent-yellow);">[ Instructor Schedules ]</a></li>
             <li><a href="session-enrollment.html">[ Session Enrollment ]</a></li>
-            <li><a href="#" class="btn" id="navLoginBtn">Login / Register</a></li>
+            <li><a href="#" class="btn">Switch to Student Login</a></li>
         </ul>
     </nav>
 </header>
@@ -316,344 +193,253 @@
     <div class="page-title">
         <div>
             <h1>Instructor Schedule Viewer</h1>
-            <p class="subtext">Log in, view assigned sessions, and find additional course details for professors.</p>
+            <p class="subtext">View your assigned teaching schedule and class performance metrics.</p>
         </div>
-        <div id="authBadge" class="badge">Not logged in</div>
+        <div id="authBadge" class="badge">Not logged in 🅰️</div>
     </div>
 
-    <div id="topMsg" class="notice" style="display:none;"></div>
-
-    <!-- LOGIN PANEL -->
     <section id="loginPanel" class="card">
         <h2>Instructor Login</h2>
-        <p class="subtext">Use a demo Instructor ID to simulate login.</p>
+        <p class="subtext">Please enter your Instructor ID to view your schedule.</p>
 
         <div class="form-row">
             <div>
-                <label for="studentIdInput">Instructor ID</label>
-                <input id="studentIdInput" placeholder="Try: instructor1" />
-                <div class="note">Demo IDs: <b>instructor1</b>, <b>instructor2</b>, <b>instructor3</b></div>
+                <label for="instructorIdInput"><b>Instructor ID</b></label>
+                <input id="instructorIdInput" placeholder="Enter: instructor1" />
             </div>
-            <div>
-                <label>&nbsp;</label>
-                <div class="actions">
-                    <button class="btn" id="loginBtn">Log In</button>
-                    <button class="btn btn-secondary" id="resetDemoBtn" type="button">Reset Demo Data</button>
-                </div>
+            <div style="display:flex; align-items:flex-end;">
+                <button class="btn" id="loginBtn">Log In</button>
             </div>
-        </div>
-
-        <div class="notice" style="margin-top:12px;">
-            This page includes validation:
-            <ul style="margin:8px 0 0 18px;">
-                <li><b>Duplicate prevention</b>: Cannot teach the same session/course twice at one time</li>
-                <li><b>Student limit enforcement</b>: Cannot allow more than the max number of students per course</li>
-            </ul>
         </div>
     </section>
 
-    <!-- MAIN INSTRUCTOR AREA -->
-    <section id="studentArea" class="grid" style="display:none; margin-top:16px;">
-        <!-- Enrolled Sessions -->
-        <section class="card">
+    <section id="instructorArea" style="display:none; margin-top:16px;">
+        
+        <h2>Welcome Dr. Andrew Ospina!</h2>
+
+        <div class="card">
             <h2>My Assigned Sessions</h2>
-            <p class="subtext">Sessions you are currently the professor of.</p>
-
-            <div id="enrolledMsg" class="notice" style="display:none;"></div>
-
             <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
                             <th>Session ID</th>
-                            <th>Course</th>
-                            <th>Enrollment Total</th>
+                            <th>Course Name</th>
+                            <th>Enrollment</th> 
                             <th>Status</th>
-                            <th>Student Success Rate</th>
+                            <th>Class Roster</th>
+                            <th>Success Rate</th>
                         </tr>
                     </thead>
-                    <tbody id="enrolledTableBody">
-                        <!-- filled by JS -->
-                    </tbody>
+                    <tbody id="scheduleTableBody">
+                        </tbody>
                 </table>
             </div>
 
-            <div class="actions">
+            <div style="margin-top: 20px;">
                 <button class="btn btn-secondary" id="logoutBtn">Log Out</button>
             </div>
-        </section>
+        </div>
 
-        <!-- Register New -->
-        <aside class="card">
-            <h2>Register for a New Session</h2>
-            <p class="subtext">Choose an open session and register.</p>
-
-            <div id="registerMsg" class="notice" style="display:none;"></div>
-
-            <div style="margin-top:10px;">
-                <label for="sessionSelect">Available Sessions</label>
-                <select id="sessionSelect"></select>
-                <div class="note">Full sessions and already-enrolled sessions are disabled.</div>
-            </div>
-
-            <div class="actions">
-                <button class="btn" id="registerBtn">Register</button>
-            </div>
-
-            <div class="notice" style="margin-top:12px;">
-                <b>Validation checklist (for rubric):</b>
-                <ul style="margin:8px 0 0 18px;">
-                    <li>Blocks duplicates</li>
-                    <li>Blocks registrations if max enrollment reached</li>
-                    <li>Shows success/error messages</li>
-                </ul>
-            </div>
-        </aside>
     </section>
 
 </main>
 
 <footer>
-    <p>&copy; INFO-465 A-Team Group - UI/UX Team Assignment - Andrew, Tolu, Sanjana, & Jean </p>
+    <p>&copy; INFO-465 A-Team Group - UI/UX Team Assignment - Andrew, Tolu, Sanjana, & Jean</p>
 </footer>
 
 <script>
 /* ==========================================================
-   STUDENT REGISTRATION DEMO LOGIC (No backend required)
-   - localStorage stores state so it stays between refreshes
-   - Validation:
-     1) prevent duplicate registration
-     2) enforce max enrollment limit
+   INSTRUCTOR SCHEDULE LOGIC WITH DROPDOWN ROSTERS
    ========================================================== */
 
-const STORAGE_KEY = "ateam_student_reg_state_v1";
-
-// Demo seed data 
-const SEED = {
-  students: [
-    { id: "instructor1", name: "Jean Gachet" },
-    { id: "instructor2", name: "Andrew Ospina" },
-    { id: "instructor3", name: "Tolu Bakare" }
-  ],
-  sessions: [
-    { id:"INFO-350-01", course:"INFO 350 Web App Dev", instructor:"Bose", max: 3 },
-    { id:"INFO-364-01", course:"INFO 364 Database Systems", instructor:"Aiken", max: 2 },
-    { id:"BUSN-301-01", course:"BUSN 301 Business Foundations", instructor:"Smyth", max: 4 },
-    { id:"INFO-450-02", course:"INFO 450 Machine Learning", instructor:"Bose", max: 1 }
-  ],
-  enrollments: {
-    // sessionId: [studentId, ...]
-    "INFO-350-01": ["student1","student2","student3"], // FULL (max=3)
-    "INFO-364-01": [],
-    "BUSN-301-01": ["student1"],
-    "INFO-450-02": ["student1"] // FULL (max=1)
-  },
-  auth: { studentId: null }
+// 1. DATA: Instructors, Sessions, and Mock Students per session
+const SYSTEM_DATA = {
+    instructors: ["instructor1", "instructor2"],
+    sessions: [
+        { 
+            id: "A-INFO-465-002", 
+            course: "Projects in Information Systems", 
+            instructor: "instructor1",
+            current: 40, 
+            max: 40,
+            successRate: "92%",
+            students: [
+                { name: "Alice Johnson", grade: "94% (A)" },
+                { name: "Bob Smith", grade: "88% (B+)" },
+                { name: "Charlie Davis", grade: "76% (C)" },
+                { name: "Diana Prince", grade: "98% (A+)" },
+                { name: "Evan Wright", grade: "82% (B-)" }
+            ]
+        },
+        { 
+            id: "A-INFO-300-001", 
+            course: "IT Infrastructure", 
+            instructor: "instructor1",
+            current: 32, 
+            max: 35,
+            successRate: "89%",
+            students: [
+                { name: "Frank Miller", grade: "72% (C-)" },
+                { name: "Grace Hopper", grade: "99% (A+)" },
+                { name: "Hank Pym", grade: "85% (B)" },
+                { name: "Ivy Doom", grade: "91% (A-)" },
+                { name: "Tolu Bakare", grade: "95% (A)" } 
+            ]
+        },
+        { 
+            id: "A-PROF-101-002", 
+            course: "Professional Development", 
+            instructor: "instructor1",
+            current: 12, 
+            max: 15,
+            successRate: "85%",
+            students: [
+                { name: "Jack Sparrow", grade: "65% (D)" },
+                { name: "Kyle Rayner", grade: "100% (A+)" },
+                { name: "Lara Croft", grade: "82% (B-)" }, 
+                { name: "Jean Carlo Gachet", grade: "91% (A-)" }, 
+                { name: "Sanjana Illendula", grade: "88% (B+)" }
+            ]
+        }
+    ]
 };
 
-function qs(id){ return document.getElementById(id); }
+// 2. STATE MANAGEMENT
+let currentUser = null;
 
-function loadState(){
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw) return JSON.parse(raw);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED));
-  return JSON.parse(JSON.stringify(SEED));
+function qs(id) { return document.getElementById(id); }
+
+function render() {
+    const loginPanel = qs("loginPanel");
+    const instructorArea = qs("instructorArea");
+    const badge = qs("authBadge");
+
+    if (!currentUser) {
+        // Show Login, Hide Schedule
+        loginPanel.style.display = "block";
+        instructorArea.style.display = "none";
+        badge.textContent = "Not logged into 🅰️-Team Systems";
+    } else {
+        // Hide Login, Show Schedule
+        loginPanel.style.display = "none";
+        instructorArea.style.display = "block";
+        badge.textContent = `Logged in as: Dr. Andrew Ospina (${currentUser})`;
+        
+        loadScheduleTable();
+    }
 }
 
-function saveState(state){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
+function loadScheduleTable() {
+    const tbody = qs("scheduleTableBody");
+    
+    // Filter sessions to only show those taught by the current user
+    const mySessions = SYSTEM_DATA.sessions.filter(s => s.instructor === currentUser);
 
-function showMsg(elId, type, text){
-  const el = qs(elId);
-  el.className = "notice " + type; // ok | err
-  el.textContent = text;
-  el.style.display = "block";
-}
+    if (mySessions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5">No sessions assigned for this ID.</td></tr>`;
+        return;
+    }
 
-function hideMsg(elId){
-  const el = qs(elId);
-  el.style.display = "none";
-}
+    // Build the HTML
+    let tableHTML = "";
 
-function enrollmentCount(state, sessionId){
-  return (state.enrollments[sessionId] || []).length;
-}
+    mySessions.forEach((session, index) => {
+        // Status Logic
+        const isFull = session.current >= session.max;
+        const statusPill = isFull 
+            ? `<span class="pill warn">FULL</span>` 
+            : `<span class="pill good">OPEN</span>`;
+        
+        // --- 1. THE MAIN ROW ---
+        tableHTML += `
+            <tr>
+                <td><b>${session.id}</b></td>
+                <td>${session.course}</td>
+                <td>${session.current} / ${session.max}</td>
+                <td>${statusPill}</td>
+                <td>
+                    <button class="btn btn-sm" onclick="toggleRoster('roster-${index}')">
+                        View Students ▼
+                    </button>
+                </td>
+                <td style="text-align: center; font-weight: bold;">
+                ${session.successRate}
+            </td>
+            </tr>
+        `;
 
-function isEnrolled(state, sessionId, studentId){
-  return (state.enrollments[sessionId] || []).includes(studentId);
-}
+        // --- 2. THE DROPDOWN ROW (Hidden by default) ---
+        // Generate the inner table of students
+        let studentRows = session.students.map(student => `
+            <tr>
+                <td>${student.name}</td>
+                <td><b>${student.grade}</b></td>
+            </tr>
+        `).join("");
 
-function setLoggedInUI(state){
-  const loggedIn = !!state.auth.studentId;
-
-  qs("loginPanel").style.display = loggedIn ? "none" : "block";
-  qs("studentArea").style.display = loggedIn ? "grid" : "none";
-
-  qs("authBadge").textContent = loggedIn
-    ? `Logged in as ${state.auth.studentId}`
-    : "Not logged in";
-}
-
-function renderEnrolledTable(state){
-  const studentId = state.auth.studentId;
-  const enrolledSessions = state.sessions.filter(s => isEnrolled(state, s.id, studentId));
-
-  const tbody = qs("enrolledTableBody");
-
-  if (enrolledSessions.length === 0){
-    tbody.innerHTML = `<tr><td colspan="6">No enrolled sessions yet.</td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = enrolledSessions.map(s => {
-    const count = enrollmentCount(state, s.id);
-    const status = (count >= s.max)
-      ? `<span class="pill full">FULL</span>`
-      : `<span class="pill open">OPEN</span>`;
-
-    return `
-      <tr>
-        <td><b>${s.id}</b></td>
-        <td>${s.course}</td>
-        <td>${s.instructor}</td>
-        <td>${count} / ${s.max}</td>
-        <td>${status}</td>
-        <td><button class="btn btn-danger" data-drop="${s.id}">Drop</button></td>
-      </tr>
-    `;
-  }).join("");
-
-  // Drop handlers
-  document.querySelectorAll("[data-drop]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const sessionId = btn.getAttribute("data-drop");
-      state.enrollments[sessionId] = (state.enrollments[sessionId] || [])
-        .filter(id => id !== studentId);
-
-      saveState(state);
-      showMsg("enrolledMsg", "ok", `Dropped ${sessionId}.`);
-      render(state);
+        tableHTML += `
+            <tr id="roster-${index}" class="roster-row">
+                <td colspan="6">
+                    <div class="roster-container">
+                        <h4>Class Roster: ${session.course}</h4>
+                        <br>
+                        <table class="roster-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Current Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${studentRows}
+                            </tbody>
+                        </table>
+                        <br>
+                        <p style="font-size:0.85rem; color:#666;">
+                            * Showing ${session.students.length} of ${session.current} enrolled students (Demo View).
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        `;
     });
-  });
+
+    tbody.innerHTML = tableHTML;
 }
 
-function renderSessionDropdown(state){
-  const studentId = state.auth.studentId;
-  const select = qs("sessionSelect");
-
-  const options = state.sessions.map(s => {
-    const count = enrollmentCount(state, s.id);
-    const full = count >= s.max;
-    const already = isEnrolled(state, s.id, studentId);
-
-    const disabled = full || already;
-    const label = `${s.id} — ${s.course} (${count}/${s.max})`
-      + (full ? " [FULL]" : "")
-      + (already ? " [ENROLLED]" : "");
-
-    return `<option value="${s.id}" ${disabled ? "disabled" : ""}>${label}</option>`;
-  }).join("");
-
-  select.innerHTML = `<option value="">Select a session...</option>` + options;
-}
-
-function render(state){
-  setLoggedInUI(state);
-  if (!state.auth.studentId) return;
-
-  renderEnrolledTable(state);
-  renderSessionDropdown(state);
-}
-
-function init(){
-  let state = loadState();
-  render(state);
-
-  // Nav login button just scrolls to login area on this screen
-  qs("navLoginBtn").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  // Login
-  qs("loginBtn").addEventListener("click", () => {
-    state = loadState();
-    const entered = qs("studentIdInput").value.trim();
-
-    if (!entered){
-      showMsg("topMsg", "err", "Please enter a Student ID.");
-      return;
+// Function to handle the accordion toggle
+window.toggleRoster = function(rowId) {
+    const row = document.getElementById(rowId);
+    if (row.style.display === "table-row") {
+        row.style.display = "none"; // Hide
+    } else {
+        row.style.display = "table-row"; // Show
     }
+};
 
-    const exists = state.students.some(s => s.id === entered);
-    if (!exists){
-      showMsg("topMsg", "err", "Invalid Student ID. Try student1, student2, or student3.");
-      return;
+// 3. EVENT LISTENERS
+qs("loginBtn").addEventListener("click", () => {
+    const inputId = qs("instructorIdInput").value.trim();
+    
+    if (inputId === "instructor1") {
+        currentUser = inputId;
+        render();
+    } else {
+        alert("Please use 'instructor1' to see the demo data.");
     }
+});
 
-    state.auth.studentId = entered;
-    saveState(state);
-    hideMsg("topMsg");
-    hideMsg("enrolledMsg");
-    hideMsg("registerMsg");
-    render(state);
-  });
+qs("logoutBtn").addEventListener("click", () => {
+    currentUser = null;
+    qs("instructorIdInput").value = "";
+    render();
+});
 
-  // Logout
-  qs("logoutBtn").addEventListener("click", () => {
-    state = loadState();
-    state.auth.studentId = null;
-    saveState(state);
-    showMsg("topMsg", "ok", "Logged out.");
-    render(state);
-  });
+// Initialize view
+render();
 
-  // Register (with validation)
-  qs("registerBtn").addEventListener("click", () => {
-    state = loadState();
-    const studentId = state.auth.studentId;
-    const sessionId = qs("sessionSelect").value;
-
-    if (!sessionId){
-      showMsg("registerMsg", "err", "Please select a session to register.");
-      return;
-    }
-
-    const session = state.sessions.find(s => s.id === sessionId);
-    const count = enrollmentCount(state, sessionId);
-
-    // VALIDATION #1: Prevent duplicates
-    if (isEnrolled(state, sessionId, studentId)){
-      showMsg("registerMsg", "err", "Duplicate registration blocked: you are already enrolled in that session.");
-      return;
-    }
-
-    // VALIDATION #2: Enforce max enrollment
-    if (count >= session.max){
-      showMsg("registerMsg", "err", "Enrollment limit reached: this session is full.");
-      return;
-    }
-
-    // OK - register student
-    state.enrollments[sessionId] = state.enrollments[sessionId] || [];
-    state.enrollments[sessionId].push(studentId);
-
-    saveState(state);
-    showMsg("registerMsg", "ok", `Registered successfully for ${sessionId}.`);
-    render(state);
-  });
-
-  // Reset demo data
-  qs("resetDemoBtn").addEventListener("click", () => {
-    localStorage.removeItem(STORAGE_KEY);
-    state = loadState();
-    showMsg("topMsg", "ok", "Demo data reset.");
-    render(state);
-  });
-}
-
-init();
 </script>
 
 </body>
