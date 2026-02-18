@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Student Registration Screen -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Team Instructor Schedule Screen</title>
+
+    <style>
+        /* --- CSS VARIABLES (Theme Colors) --- */
+        :root {
+            --primary-black: #1a1a1a;
+            --accent-yellow: #FFD700; /* Gold/Yellow */
+            --bg-white: #f4f4f4;
+            --text-dark: #333333;
+            --border: #dddddd;
+
+            --ok-bg: #e9f8ef;
+            --ok-text: #126b2b;
+            --err-bg: #fdecec;
+            --err-text: #9b1c1c;
+        }
+
+        /* --- BASIC RESET --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--primary-black);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-yellow);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-yellow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-yellow);
+        }
+
+        /* --- BUTTONS (Global Style) --- */
+        .btn {
+            background-color: var(--accent-yellow);
+            color: var(--primary-black);
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background-color: #e6c200; }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-black);
+            border: 2px solid var(--primary-black);
+        }
+        .btn-secondary:hover { background-color: #f6f6f6; }
+
+        .btn-danger {
+            background-color: #ffe3e3;
+            border: 2px solid #c92a2a;
+            color: #c92a2a;
+        }
+        .btn-danger:hover { background-color: #ffd1d1; }
+
+        /* --- MAIN --- */
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* --- PAGE LAYOUT --- */
+        .page-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 1.25rem;
+        }
+
+        .page-title h1 {
+            font-size: 1.6rem;
+            margin-bottom: .25rem;
+        }
+
+        .subtext {
+            color: #666;
+            font-size: .95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fafafa;
+            font-size: .85rem;
+            white-space: nowrap;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            background: #fff;
+        }
+
+        .card h2 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            border-left: 6px solid var(--accent-yellow);
+            padding-left: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        @media (max-width: 700px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        label {
+            font-size: .9rem;
+            color: #444;
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.25);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            align-items: center;
+        }
+
+        .note {
+            margin-top: 8px;
+            font-size: .85rem;
+            color: #666;
+        }
+
+        .notice {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fafafa;
+        }
+        .notice.ok {
+            background: var(--ok-bg);
+            border-color: #b9f0c8;
+            color: var(--ok-text);
+        }
+        .notice.err {
+            background: var(--err-bg);
+            border-color: #ffbcbc;
+            color: var(--err-text);
+        }
+
+        /* --- TABLE --- */
+        .table-wrap {
+            overflow: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+        }
+
+        thead th {
+            background: #f7f7f7;
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: .9rem;
+        }
+
+        tbody td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+            font-size: .95rem;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: .8rem;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+        .pill.full {
+            border-color: #ffbcbc;
+            background: #fdecec;
+            color: #9b1c1c;
+        }
+        .pill.open {
+            border-color: #b9f0c8;
+            background: #e9f8ef;
+            color: #126b2b;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-black);
+            color: #888;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            border-top: 4px solid var(--accent-yellow);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">A-<span>Team</span> Systems</div>
+    <nav>
+        <ul>
+            <!-- Update href paths to your real html filenames -->
+            <li><a href="index.html">[ Home ]</a></li>
+            <li><a href="course-search.html">[ Course Search ]</a></li>
+            <li><a href="student-registrations.html">[ Student Registrations ]</a></li>
+            <li><a href="instructor-schedules.html" style="color: yellow;">[ Instructor Schedules ]</a></li>
+            <li><a href="session-enrollment.html">[ Session Enrollment ]</a></li>
+            <li><a href="#" class="btn" id="navLoginBtn">Login / Register</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <div class="page-title">
+        <div>
+            <h1>Instructor Schedule Viewer</h1>
+            <p class="subtext">Log in, view assigned sessions, and find additional course details for professors.</p>
+        </div>
+        <div id="authBadge" class="badge">Not logged in</div>
+    </div>
+
+    <div id="topMsg" class="notice" style="display:none;"></div>
+
+    <!-- LOGIN PANEL -->
+    <section id="loginPanel" class="card">
+        <h2>Instructor Login</h2>
+        <p class="subtext">Use a demo Instructor ID to simulate login.</p>
+
+        <div class="form-row">
+            <div>
+                <label for="studentIdInput">Instructor ID</label>
+                <input id="studentIdInput" placeholder="Try: instructor1" />
+                <div class="note">Demo IDs: <b>instructor1</b>, <b>instructor2</b>, <b>instructor3</b></div>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <div class="actions">
+                    <button class="btn" id="loginBtn">Log In</button>
+                    <button class="btn btn-secondary" id="resetDemoBtn" type="button">Reset Demo Data</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="notice" style="margin-top:12px;">
+            This page includes validation:
+            <ul style="margin:8px 0 0 18px;">
+                <li><b>Duplicate prevention</b>: Cannot teach the same session/course twice at one time</li>
+                <li><b>Student limit enforcement</b>: Cannot allow more than the max number of students per course</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MAIN INSTRUCTOR AREA -->
+    <section id="studentArea" class="grid" style="display:none; margin-top:16px;">
+        <!-- Enrolled Sessions -->
+        <section class="card">
+            <h2>My Assigned Sessions</h2>
+            <p class="subtext">Sessions you are currently the professor of.</p>
+
+            <div id="enrolledMsg" class="notice" style="display:none;"></div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Session ID</th>
+                            <th>Course</th>
+                            <th>Enrollment Total</th>
+                            <th>Status</th>
+                            <th>Student Success Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enrolledTableBody">
+                        <!-- filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-secondary" id="logoutBtn">Log Out</button>
+            </div>
+        </section>
+
+        <!-- Register New -->
+        <aside class="card">
+            <h2>Register for a New Session</h2>
+            <p class="subtext">Choose an open session and register.</p>
+
+            <div id="registerMsg" class="notice" style="display:none;"></div>
+
+            <div style="margin-top:10px;">
+                <label for="sessionSelect">Available Sessions</label>
+                <select id="sessionSelect"></select>
+                <div class="note">Full sessions and already-enrolled sessions are disabled.</div>
+            </div>
+
+            <div class="actions">
+                <button class="btn" id="registerBtn">Register</button>
+            </div>
+
+            <div class="notice" style="margin-top:12px;">
+                <b>Validation checklist (for rubric):</b>
+                <ul style="margin:8px 0 0 18px;">
+                    <li>Blocks duplicates</li>
+                    <li>Blocks registrations if max enrollment reached</li>
+                    <li>Shows success/error messages</li>
+                </ul>
+            </div>
+        </aside>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; INFO-465 A-Team Group - UI/UX Team Assignment - Andrew, Tolu, Sanjana, & Jean </p>
+</footer>
+
+<script>
+/* ==========================================================
+   STUDENT REGISTRATION DEMO LOGIC (No backend required)
+   - localStorage stores state so it stays between refreshes
+   - Validation:
+     1) prevent duplicate registration
+     2) enforce max enrollment limit
+   ========================================================== */
+
+const STORAGE_KEY = "ateam_student_reg_state_v1";
+
+// Demo seed data 
+const SEED = {
+  students: [
+    { id: "instructor1", name: "Jean Gachet" },
+    { id: "instructor2", name: "Andrew Ospina" },
+    { id: "instructor3", name: "Tolu Bakare" }
+  ],
+  sessions: [
+    { id:"INFO-350-01", course:"INFO 350 Web App Dev", instructor:"Bose", max: 3 },
+    { id:"INFO-364-01", course:"INFO 364 Database Systems", instructor:"Aiken", max: 2 },
+    { id:"BUSN-301-01", course:"BUSN 301 Business Foundations", instructor:"Smyth", max: 4 },
+    { id:"INFO-450-02", course:"INFO 450 Machine Learning", instructor:"Bose", max: 1 }
+  ],
+  enrollments: {
+    // sessionId: [studentId, ...]
+    "INFO-350-01": ["student1","student2","student3"], // FULL (max=3)
+    "INFO-364-01": [],
+    "BUSN-301-01": ["student1"],
+    "INFO-450-02": ["student1"] // FULL (max=1)
+  },
+  auth: { studentId: null }
+};
+
+function qs(id){ return document.getElementById(id); }
+
+function loadState(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) return JSON.parse(raw);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED));
+  return JSON.parse(JSON.stringify(SEED));
+}
+
+function saveState(state){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function showMsg(elId, type, text){
+  const el = qs(elId);
+  el.className = "notice " + type; // ok | err
+  el.textContent = text;
+  el.style.display = "block";
+}
+
+function hideMsg(elId){
+  const el = qs(elId);
+  el.style.display = "none";
+}
+
+function enrollmentCount(state, sessionId){
+  return (state.enrollments[sessionId] || []).length;
+}
+
+function isEnrolled(state, sessionId, studentId){
+  return (state.enrollments[sessionId] || []).includes(studentId);
+}
+
+function setLoggedInUI(state){
+  const loggedIn = !!state.auth.studentId;
+
+  qs("loginPanel").style.display = loggedIn ? "none" : "block";
+  qs("studentArea").style.display = loggedIn ? "grid" : "none";
+
+  qs("authBadge").textContent = loggedIn
+    ? `Logged in as ${state.auth.studentId}`
+    : "Not logged in";
+}
+
+function renderEnrolledTable(state){
+  const studentId = state.auth.studentId;
+  const enrolledSessions = state.sessions.filter(s => isEnrolled(state, s.id, studentId));
+
+  const tbody = qs("enrolledTableBody");
+
+  if (enrolledSessions.length === 0){
+    tbody.innerHTML = `<tr><td colspan="6">No enrolled sessions yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = enrolledSessions.map(s => {
+    const count = enrollmentCount(state, s.id);
+    const status = (count >= s.max)
+      ? `<span class="pill full">FULL</span>`
+      : `<span class="pill open">OPEN</span>`;
+
+    return `
+      <tr>
+        <td><b>${s.id}</b></td>
+        <td>${s.course}</td>
+        <td>${s.instructor}</td>
+        <td>${count} / ${s.max}</td>
+        <td>${status}</td>
+        <td><button class="btn btn-danger" data-drop="${s.id}">Drop</button></td>
+      </tr>
+    `;
+  }).join("");
+
+  // Drop handlers
+  document.querySelectorAll("[data-drop]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sessionId = btn.getAttribute("data-drop");
+      state.enrollments[sessionId] = (state.enrollments[sessionId] || [])
+        .filter(id => id !== studentId);
+
+      saveState(state);
+      showMsg("enrolledMsg", "ok", `Dropped ${sessionId}.`);
+      render(state);
+    });
+  });
+}
+
+function renderSessionDropdown(state){
+  const studentId = state.auth.studentId;
+  const select = qs("sessionSelect");
+
+  const options = state.sessions.map(s => {
+    const count = enrollmentCount(state, s.id);
+    const full = count >= s.max;
+    const already = isEnrolled(state, s.id, studentId);
+
+    const disabled = full || already;
+    const label = `${s.id} — ${s.course} (${count}/${s.max})`
+      + (full ? " [FULL]" : "")
+      + (already ? " [ENROLLED]" : "");
+
+    return `<option value="${s.id}" ${disabled ? "disabled" : ""}>${label}</option>`;
+  }).join("");
+
+  select.innerHTML = `<option value="">Select a session...</option>` + options;
+}
+
+function render(state){
+  setLoggedInUI(state);
+  if (!state.auth.studentId) return;
+
+  renderEnrolledTable(state);
+  renderSessionDropdown(state);
+}
+
+function init(){
+  let state = loadState();
+  render(state);
+
+  // Nav login button just scrolls to login area on this screen
+  qs("navLoginBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // Login
+  qs("loginBtn").addEventListener("click", () => {
+    state = loadState();
+    const entered = qs("studentIdInput").value.trim();
+
+    if (!entered){
+      showMsg("topMsg", "err", "Please enter a Student ID.");
+      return;
+    }
+
+    const exists = state.students.some(s => s.id === entered);
+    if (!exists){
+      showMsg("topMsg", "err", "Invalid Student ID. Try student1, student2, or student3.");
+      return;
+    }
+
+    state.auth.studentId = entered;
+    saveState(state);
+    hideMsg("topMsg");
+    hideMsg("enrolledMsg");
+    hideMsg("registerMsg");
+    render(state);
+  });
+
+  // Logout
+  qs("logoutBtn").addEventListener("click", () => {
+    state = loadState();
+    state.auth.studentId = null;
+    saveState(state);
+    showMsg("topMsg", "ok", "Logged out.");
+    render(state);
+  });
+
+  // Register (with validation)
+  qs("registerBtn").addEventListener("click", () => {
+    state = loadState();
+    const studentId = state.auth.studentId;
+    const sessionId = qs("sessionSelect").value;
+
+    if (!sessionId){
+      showMsg("registerMsg", "err", "Please select a session to register.");
+      return;
+    }
+
+    const session = state.sessions.find(s => s.id === sessionId);
+    const count = enrollmentCount(state, sessionId);
+
+    // VALIDATION #1: Prevent duplicates
+    if (isEnrolled(state, sessionId, studentId)){
+      showMsg("registerMsg", "err", "Duplicate registration blocked: you are already enrolled in that session.");
+      return;
+    }
+
+    // VALIDATION #2: Enforce max enrollment
+    if (count >= session.max){
+      showMsg("registerMsg", "err", "Enrollment limit reached: this session is full.");
+      return;
+    }
+
+    // OK - register student
+    state.enrollments[sessionId] = state.enrollments[sessionId] || [];
+    state.enrollments[sessionId].push(studentId);
+
+    saveState(state);
+    showMsg("registerMsg", "ok", `Registered successfully for ${sessionId}.`);
+    render(state);
+  });
+
+  // Reset demo data
+  qs("resetDemoBtn").addEventListener("click", () => {
+    localStorage.removeItem(STORAGE_KEY);
+    state = loadState();
+    showMsg("topMsg", "ok", "Demo data reset.");
+    render(state);
+  });
+}
+
+init();
+</script>
+
+</body>
+</html>
