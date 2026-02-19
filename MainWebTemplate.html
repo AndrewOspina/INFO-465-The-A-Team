@@ -3,57 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <title>Course Search</title>
+
+    <style>
+        /* --- PAGE COLOR SCHEME (inspired by the A‑TEAM SYSTEMS UI) --- */
+        :root {
+            --black: #1A1A1A;
+            --yellow: #F2C94C;
+            --light-gray: #F7F7F7;
+            --dark-gray: #333333;
+            --border-gray: #D9D9D9;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--light-gray);
+        }
+
+        /* --- HEADER BAR --- */
+        header {
+            background-color: var(--black);
+            color: white;
+            padding: 18px 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* --- MAIN CONTENT WRAPPER --- */
+        .container {
+            width: 85%;
+            margin: 30px auto;
+        }
+
+        /* --- SECTION CARD STYLE --- */
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-gray);
+            margin-bottom: 30px;
+        }
+
+        /* --- SECTION TITLES --- */
+        h2 {
+            margin-top: 0;
+            color: var(--black);
+        }
+
+        /* --- SEARCH FORM LAYOUT --- */
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 10px;
+            border: 1px solid var(--border-gray);
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* --- BUTTON STYLE --- */
+        button {
+            background-color: var(--yellow);
+            border: none;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #e0b645;
+        }
+
+        /* --- TABLE STYLE --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background-color: var(--black);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+    </style>
 </head>
+
 <body>
 
-    <!-- this is the main header so ppl know what page they on -->
-    <h1>Course Search Screen</h1>
+<header>
+    Course Search Portal
+</header>
 
-    <!-- form that lets user search for a class based on diff things -->
-    <form>
+<div class="container">
 
-        <!-- department input -->
-        <!-- deptInput = this is where user types the department like IS, CS, MATH, etc -->
-        <label for="department">Department:</label>
-        <input type="text" id="department" name="department" placeholder="Enter Department">
-        <br><br>
+    <!-- ========================================================= -->
+    <!-- SEARCH SECTION -->
+    <!-- ========================================================= -->
+    <div class="card">
+        <h2>Search for Courses</h2>
 
-        <!-- instructor input -->
-        <!-- instructorInput = user types the prof name if they tryna find classes by who teaching -->
-        <label for="instructor">Instructor:</label>
-        <input type="text" id="instructor" name="instructor" placeholder="Enter Instructor Name">
-        <br><br>
+        <!-- 
+            PSEUDO-CODE:
+            - User enters search filters
+            - We pass these values to backend
+            - Backend returns matching courses
+        -->
 
-        <!-- course number input -->
-        <!-- courseNumInput = this is the actual class number like 101, 202, etc -->
-        <label for="courseNumber">Course Number:</label>
-        <input type="text" id="courseNumber" name="courseNumber" placeholder="Enter Course Number">
-        <br><br>
+        <div class="search-grid">
 
-        <!-- searchBtn = button that starts the search process -->
-        <button type="submit">Search</button>
+            <!-- Department filter -->
+            <!-- deptInput = stores selected department -->
+            <select id="deptInput">
+                <option value="">Department</option>
+                <option value="INFO">INFO</option>
+                <option value="BUSN">BUSN</option>
+                <option value="MATH">MATH</option>
+            </select>
 
-    </form>
+            <!-- Instructor filter -->
+            <!-- instructorInput = stores instructor name -->
+            <input id="instructorInput" type="text" placeholder="Instructor Name">
 
-    <hr>
+            <!-- Course number filter -->
+            <!-- courseNumInput = stores course number (ex: 320) -->
+            <input id="courseNumInput" type="text" placeholder="Course Number">
+        </div>
 
-    <!-- this section gonna display whatever course matches the search -->
-    <h2>Course Details</h2>
+        <!-- Search button -->
+        <!-- When clicked, triggers searchCourses() -->
+        <button onclick="searchCourses()">Search</button>
+    </div>
 
-    <!-- courseName = shows the name of the class -->
-    <p><strong>Course Name:</strong> Intro to Information Systems</p>
 
-    <!-- creditHours = how many credits the class worth -->
-    <p><strong>Credit Hours:</strong> 3</p>
+    <!-- ========================================================= -->
+    <!-- RESULTS SECTION -->
+    <!-- ========================================================= -->
+    <div class="card">
+        <h2>Course Results</h2>
 
-    <!-- prereqs = classes you gotta take before this one -->
-    <p><strong>Prerequisites:</strong> IS 101</p>
+        <!-- Table where results will appear -->
+        <table id="resultsTable">
+            <tr>
+                <th>Course</th>
+                <th>Instructor</th>
+                <th>Credit Hours</th>
+                <th>Prerequisites</th>
+                <th>Modality</th>
+                <th>Max Enrollment</th>
+            </tr>
+            <!-- JS will insert rows here -->
+        </table>
+    </div>
 
-    <!-- modality = if the class online, in-person, hybrid, etc -->
-    <p><strong>Modality:</strong> Hybrid</p>
+</div>
 
-    <!-- maxEnroll = max amount of students allowed in the class -->
-    <p><strong>Maximum Enrollment:</strong> 30</p>
+<script>
+    /* ============================================================
+       SAMPLE DATA (you can replace this with backend data later)
+       ============================================================ */
+
+    // courseList = array storing all course objects
+    const courseList = [
+        {
+            course: "INFO 320",
+            instructor: "Bose",
+            credits: 3,
+            prereqs: "INFO 202",
+            modality: "In-Person",
+            max: 30
+        },
+        {
+            course: "BUSN 301",
+            instructor: "Smyth",
+            credits: 3,
+            prereqs: "None",
+            modality: "Online",
+            max: 40
+        },
+        {
+            course: "INFO 450",
+            instructor: "Bose",
+            credits: 3,
+            prereqs: "INFO 350",
+            modality: "Hybrid",
+            max: 25
+        }
+    ];
+
+    /* ============================================================
+       SEARCH FUNCTION
+       ============================================================ */
+
+    function searchCourses() {
+
+        // Grab user input values
+        const dept = document.getElementById("deptInput").value.toUpperCase();
+        const instructor = document.getElementById("instructorInput").value.toLowerCase();
+        const courseNum = document.getElementById("courseNumInput").value;
+
+        // resultsTable = HTML table where results will be displayed
+        const resultsTable = document.getElementById("resultsTable");
+
+        // Clear old results (but keep header row)
+        resultsTable.innerHTML = `
+            <tr>
+                <th>Course</th>
+                <th>Instructor</th>
+                <th>Credit Hours</th>
+                <th>Prerequisites</th>
+                <th>Modality</th>
+                <th>Max Enrollment</th>
+            </tr>
+        `;
+
+        /* 
+            PSEUDO-CODE:
+            - Loop through each course
+            - Check if it matches all filters
+            - If yes, add it to the table
+        */
+
+        courseList.forEach(course => {
+
+            // Boolean checks for each filter
+            const matchesDept = dept === "" || course.course.startsWith(dept);
+            const matchesInstructor = instructor === "" || course.instructor.toLowerCase().includes(instructor);
+            const matchesCourseNum = courseNum === "" || course.course.includes(courseNum);
+
+            // If all filters match, display the course
+            if (matchesDept && matchesInstructor && matchesCourseNum) {
+
+                // Create a new table row
+                const row = `
+                    <tr>
+                        <td>${course.course}</td>
+                        <td>${course.instructor}</td>
+                        <td>${course.credits}</td>
+                        <td>${course.prereqs}</td>
+                        <td>${course.modality}</td>
+                        <td>${course.max}</td>
+                    </tr>
+                `;
+
+                // Add row to table
+                resultsTable.innerHTML += row;
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
