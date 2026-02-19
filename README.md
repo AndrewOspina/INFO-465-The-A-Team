@@ -7,11 +7,11 @@ Team Member Contributions:
 - Tolu: Established A Session Enrollment Screen that includes students into a particular session. Only accessable to authorized users of the URL. 
 
 One-line summaries for each screen: 
-<br>
+<br></br>
 -Home Screen: 
-<br>
+<br></br>
 -Course Search Screen: 
-<br>
+<br></br>
 -Student Registration Screen: A student can login with their respective Student ID, which takes them to their enrolled sessions, where they can register or drop courses and logout.
 -Instructor Schedule Screen:
 -Session Enrollment Screen:
